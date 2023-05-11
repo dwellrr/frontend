@@ -1,0 +1,8 @@
+{
+    "appId": "dwellingservice-isemr",
+    "appUrl": "https://realm.mongodb.com/groups/645a599bb8c0c13f0e286456/apps/645be375019b97bd2fd03bd3",
+    "baseUrl": "https://realm.mongodb.com",
+    "clientApiBaseUrl": "https://realm.mongodb.com",
+    "dataApiBaseUrl": "https://data.mongodb-api.com",
+    "dataSourceName": "mongodb-atlas"
+}
