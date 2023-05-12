@@ -27,6 +27,9 @@ useEffect (() => {
         console.log(IdOfOpenCategoryMenu)
         console.log(setIdOfOpenCategoryMenu)
     }
+    else {
+        handleCloseBottomSheet()
+    }
 }, [IdOfOpenCategoryMenu])
 const handleOpenBottomSheet = () => {
     setIsOpen(true);

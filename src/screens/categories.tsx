@@ -11,10 +11,9 @@ import { RenameModal } from '../components/molecules/RenameModal';
 import {useUser} from '@realm/react';
 import {realmContext} from '../../RealmContext';
 import {Cat} from '../CatSchema';
-
-
-
+import {ObjectId} from 'mongodb';
 import { BSON } from 'realm';
+
 const {useRealm, useQuery} = realmContext;
 const itemSubscriptionName = 'everything';
 
@@ -45,12 +44,16 @@ console.log(items);
 
   function passName(n) {
     if (isNewCat) {
-      createItem(n) 
+      createItem(n.name) 
+    }
+    else {
+      
+      renameItem(OpenMenuCategoryId, n.name)
     }
   }
 
   const createItem = useCallback(
-    ({name}: {name: string}) => {
+    (name: string) => {
       // if the realm exists, create an Item
       realm.write(() => {
         return new Cat(realm, {
@@ -63,14 +66,29 @@ console.log(items);
   );
 
   const deleteItem = useCallback(
-    (id: BSON.ObjectId) => {
+    (id: string) => {
       // if the realm exists, get the Item with a particular _id and delete it
-      const item = realm.objectForPrimaryKey(Cat, id); // search for a realm object with a primary key that is an objectId
+      const idid = new BSON.ObjectId(id)
+      const item = realm.objectForPrimaryKey(Cat, idid); // search for a realm object with a primary key that is an objectId
       if (item) {
           realm.write(() => {
             realm.delete(item);
           });
         }
+    },
+    [realm, user],
+  );
+
+  const renameItem = useCallback(
+    (id: string,_name: string) => {
+      // if the realm exists, get the Item with a particular _id and delete it
+      const idid = new BSON.ObjectId(id)
+      const item = realm.objectForPrimaryKey(Cat, idid); // search for a realm object with a primary key that is an objectId
+      if (item) {
+          realm.write(() => {
+            item.name = _name
+          });
+      }
     },
     [realm, user],
   );
@@ -81,7 +99,7 @@ console.log(items);
         <ContextMenuFooter IdOfOpenCategoryMenu = {OpenMenuCategoryId} setIdOfOpenCategoryMenu = {setOpenMenuCategoryId} nameOfOpenCategory = {OpenMenuCategoryName}>
           <View style = {{flex: 1, flexDirection: 'row'}}>
             <ButtonMenu _onPress={() => {setOpenRenameModal(true); setIsNewCat(false)}} label = 'rename'/>
-            <ButtonMenu _onPress={() => deleteItem(ObjectId(OpenMenuCategoryId))} label = 'delete'/>
+            <ButtonMenu _onPress={() => {deleteItem(OpenMenuCategoryId), setOpenMenuCategoryId("")}} label = 'delete'/>
           </View>
           
         </ContextMenuFooter>
