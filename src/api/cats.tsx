@@ -2,31 +2,10 @@ import { useEffect, useState } from 'react';
 import {StyleSheet, Text, View, Button, SafeAreaView, FlatList } from 'react-native';
 import { ListItem } from '../components/atoms/ListItem';
 
-import {useUser} from '@realm/react';
-import {realmContext} from '../../RealmContext';
-import {Cat} from '../CatSchema';
-
-const {useRealm, useQuery} = realmContext;
-const itemSubscriptionName = 'everything';
-
-function Cats ({onCategoryHold}) {
-  const realm = useRealm();
-  const items = useQuery(Cat).sorted('_id');
-  const user = useUser();
-
-  
-  useEffect(() => {
-      realm.subscriptions.update(mutableSubs => {
-        mutableSubs.add(realm.objects(Cat), {name: itemSubscriptionName});
-      });
-  }, [realm]);
 
 
-  console.log(items);
-
-  
-
-  
+function Cats ({onCategoryHold, items}) {
+    
   const renderItem = ({ item }) => (
     <ListItem item={item} onHold = {() => onCategoryHold(item._id, item.name)}/>
   );

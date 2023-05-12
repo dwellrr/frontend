@@ -6,26 +6,37 @@ import {
     TouchableWithoutFeedback
   } from 'react-native';
   import {ButtonMenu} from '../atoms/ButtonMenu'
+  import { useState } from 'react';
   
-export function RenameModal({openModal, setOpenModal, defaultText}) {
-    return(
+  type Props = {
+    onSubmit: ({name}: {name: string}) => void;
+    openModal;
+    setOpenModal;
+    defaultText
+  };
+
+export function RenameModal(props: Props): React.ReactElement<Props> {
+    
+  const [name, setName] = useState('');
+  return(
   <Modal transparent={true}
-   visible={openModal}
-   onRequestClose={() => setOpenModal(false)}
+   visible={props.openModal}
+   onRequestClose={() => props.setOpenModal(false)}
    animationType='fade'>
 
-    <TouchableWithoutFeedback onPress={() => setOpenModal(false)}>
+    <TouchableWithoutFeedback onPress={() => props.setOpenModal(false)}>
         <View style = {styles.modalBody}>
     <TouchableWithoutFeedback onPress={() => {}}>
         <View style = {styles.mainPanel} >
         <TextInput
       style={styles.input}
       placeholder="Type here :)"
-      defaultValue={defaultText}
+      onChangeText={(text: string) => setName(text)}
+      defaultValue={props.defaultText}
       autoFocus={true}
       textAlign='center'
     />
-    <ButtonMenu _onPress={() => console.log("heya")} label= 'Save'/>
+    <ButtonMenu _onPress={() => props.onSubmit({name})} label= 'Save'/>
     </View>
     </TouchableWithoutFeedback>
         </View>
