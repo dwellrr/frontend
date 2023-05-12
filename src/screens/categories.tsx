@@ -12,6 +12,9 @@ import {useUser} from '@realm/react';
 import {realmContext} from '../../RealmContext';
 import {Cat} from '../CatSchema';
 
+
+
+import { BSON } from 'realm';
 const {useRealm, useQuery} = realmContext;
 const itemSubscriptionName = 'everything';
 
@@ -59,13 +62,26 @@ console.log(items);
     [realm, user],
   );
 
+  const deleteItem = useCallback(
+    (id: BSON.ObjectId) => {
+      // if the realm exists, get the Item with a particular _id and delete it
+      const item = realm.objectForPrimaryKey(Cat, id); // search for a realm object with a primary key that is an objectId
+      if (item) {
+          realm.write(() => {
+            realm.delete(item);
+          });
+        }
+    },
+    [realm, user],
+  );
+
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Cats onCategoryHold={OpenPopup} items={items}></Cats>
         <ContextMenuFooter IdOfOpenCategoryMenu = {OpenMenuCategoryId} setIdOfOpenCategoryMenu = {setOpenMenuCategoryId} nameOfOpenCategory = {OpenMenuCategoryName}>
           <View style = {{flex: 1, flexDirection: 'row'}}>
             <ButtonMenu _onPress={() => {setOpenRenameModal(true); setIsNewCat(false)}} label = 'rename'/>
-            <ButtonMenu _onPress={() => console.log("hey :)")} label = 'delete'/>
+            <ButtonMenu _onPress={() => deleteItem(ObjectId(OpenMenuCategoryId))} label = 'delete'/>
           </View>
           
         </ContextMenuFooter>

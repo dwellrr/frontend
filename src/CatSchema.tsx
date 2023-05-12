@@ -1,3 +1,4 @@
+
 import {BSON} from 'realm';
 
 export class Cat extends Realm.Object<Cat> {
@@ -6,7 +7,7 @@ export class Cat extends Realm.Object<Cat> {
   dateCreated!: Date;
 
   static schema: Realm.ObjectSchema = {
-    name: 'Categories',
+    name: 'Cat',
     primaryKey: '_id',
     properties: {
       // This allows us to automatically generate a unique _id for each Item

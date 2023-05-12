@@ -36,7 +36,7 @@ export function RenameModal(props: Props): React.ReactElement<Props> {
       autoFocus={true}
       textAlign='center'
     />
-    <ButtonMenu _onPress={() => props.onSubmit({name})} label= 'Save'/>
+    <ButtonMenu _onPress={() => {props.onSubmit({name}); props.setOpenModal(false)}} label= 'Save'/>
     </View>
     </TouchableWithoutFeedback>
         </View>
