@@ -7,6 +7,7 @@ import {Navigator} from './src/navigations/appnav';
 import {AppProvider, UserProvider} from '@realm/react';
 import {appId, baseUrl} from './atlasConfig.json';
 import {realmContext} from './RealmContext';
+import { WelcomeView } from './src/screens/WelcomeView';
 
 
 
@@ -37,6 +38,7 @@ const LoadingIndicator = () => {
   export default function App() {
       return (
         <AppProvider id={appId} baseUrl = {baseUrl}>
+          <UserProvider fallback={WelcomeView}>
           <RealmProvider
           sync={{
             flexible: true,
@@ -48,6 +50,7 @@ const LoadingIndicator = () => {
           fallback={LoadingIndicator}>
           <Navigator/>
           </RealmProvider>
+          </UserProvider>
         </AppProvider>
       );
 }

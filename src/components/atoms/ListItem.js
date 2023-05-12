@@ -15,8 +15,8 @@ const handleCatHold = (catId, props) => {
 
   
 export const ListItem = ({item, onHold}) => (
-    <TouchableOpacity onPress = {() => handleCatPress(item.id)} onLongPress = {onHold} style = {(styles.listItem)} key = {item.id}>
-        <Text style = {(styles.listItemText)} key = {item.id}>{item.name}</Text>
+    <TouchableOpacity onPress = {() => handleCatPress(item._id)} onLongPress = {onHold} style = {(styles.listItem)} key = {item._id}>
+        <Text style = {(styles.listItemText)} key = {item._id}>{item.name}</Text>
     </TouchableOpacity>
 );
 
