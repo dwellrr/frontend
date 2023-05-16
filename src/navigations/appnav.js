@@ -33,7 +33,7 @@ export function Navigator() {
       <Drawer.Navigator initialRouteName="Home">
         <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Note" component={NoteScreen} />
-        <Drawer.Screen name="Categories" component={CategoriesScreen} />
+        <Drawer.Screen name="Notes" component={CategoriesScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
     );

@@ -4,10 +4,10 @@ import { ListItem } from '../components/atoms/ListItem';
 
 
 
-function Cats ({onCategoryHold, items}) {
+function Cats ({onCategoryHold, onCategoryTap, items}) {
     
   const renderItem = ({ item }) => (
-    <ListItem item={item} onHold = {() => onCategoryHold(item._id, item.name)}/>
+    <ListItem item={item} onHold = {() => onCategoryHold(item._id, item.name)} onTap = {() => onCategoryTap(item._id)}/>
   );
   return (
       <View style = {styles.container}>

@@ -11,7 +11,6 @@ import { RenameModal } from '../components/molecules/RenameModal';
 import {useUser} from '@realm/react';
 import {realmContext} from '../../RealmContext';
 import {Cat} from '../CatSchema';
-import {ObjectId} from 'mongodb';
 import { BSON } from 'realm';
 
 const {useRealm, useQuery} = realmContext;
@@ -39,6 +38,10 @@ console.log(items);
     setOpenMenuCategoryId(CatId);
     setOpenMenuCategoryName(CatName);
   };
+  const GoToNote = (CatId) => {
+    const idid = new BSON.ObjectId(CatId);
+    navigation.navigate('Note', {idid});
+  }
   const [openRenameModal, setOpenRenameModal] = useState(false);
   const [isNewCat, setIsNewCat] = useState(false);
 
@@ -52,13 +55,15 @@ console.log(items);
     }
   }
 
+  
   const createItem = useCallback(
     (name: string) => {
       // if the realm exists, create an Item
       realm.write(() => {
         return new Cat(realm, {
           name,
-          dateCreated: new Date()
+          dateCreated: new Date(),
+          noteText: ""
         });
       });
     },
@@ -95,7 +100,7 @@ console.log(items);
 
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Cats onCategoryHold={OpenPopup} items={items}></Cats>
+        <Cats onCategoryHold={OpenPopup} onCategoryTap={GoToNote} items={items}></Cats>
         <ContextMenuFooter IdOfOpenCategoryMenu = {OpenMenuCategoryId} setIdOfOpenCategoryMenu = {setOpenMenuCategoryId} nameOfOpenCategory = {OpenMenuCategoryName}>
           <View style = {{flex: 1, flexDirection: 'row'}}>
             <ButtonMenu _onPress={() => {setOpenRenameModal(true); setIsNewCat(false)}} label = 'rename'/>

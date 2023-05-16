@@ -5,6 +5,7 @@ export class Cat extends Realm.Object<Cat> {
   _id!: BSON.ObjectId;
   name!: string;
   dateCreated!: Date;
+  noteText!: string;
 
   static schema: Realm.ObjectSchema = {
     name: 'Cat',
@@ -12,9 +13,9 @@ export class Cat extends Realm.Object<Cat> {
     properties: {
       // This allows us to automatically generate a unique _id for each Item
       _id: {type: 'objectId', default: () => new BSON.ObjectId()},
-      // All todo items will default to incomplete
       name: 'string',
-      dateCreated: 'date'
+      dateCreated: 'date',
+      noteText: 'string'
     },
   };
 }
